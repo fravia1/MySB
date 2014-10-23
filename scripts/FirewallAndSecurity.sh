@@ -257,7 +257,7 @@ case $1 in
 	#	StatusLSB
 
 		# PlexMedia Server
-		if [ "$INSTALLPLEXMEDIA" == "YES" ] && [ -f "/usr/lib/plexmediaserver" ]; then
+		if [ "$INSTALLPLEXMEDIA" == "YES" ] && [ -f "/usr/lib/plexmediaserver/start.sh" ]; then
 			iptables -t filter -A INPUT -p tcp --dport 32400 -j ACCEPT -m comment --comment "PlexMediaServer"
 		fi
 	
