@@ -67,6 +67,10 @@ if [ -f /etc/MySB/infos/mainuser.info ]; then
 fi
 if [ -f /etc/MySB/infos/certpass.info ]; then
 	CERTPASS=`cat /etc/MySB/infos/certpass.info`
+else
+	if hash mkpasswd 2>/dev/null; then
+		mkpasswd $HOSTFQDN > /etc/MySB/infos/certpass.info
+	fi
 fi
 # ----- Main user info
 
