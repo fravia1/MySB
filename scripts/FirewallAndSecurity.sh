@@ -356,7 +356,7 @@ case $1 in
 						perl -pi -e "s/$SEARCH/WHITE_UDP_IN=\"${OVPNPORT1} ${OVPNPORT2}\"/g" /etc/pgl/pglcmd.conf	
 						
 						SEARCH=$(cat /etc/pgl/pglcmd.conf | grep "WHITE_TCP_OUT=")
-						perl -pi -e "s/$SEARCH/WHITE_TCP_OUT=\"80 443 ${CAKEBOXPORT} ${NGINXHTTPPORT} ${NGINXHTTPSPORT} ${WEBMINPORT} ${NEWFTPPORT} ${NEWSSHPORT} ${NEWFTPDATAPORT} ${FTP_PASSIVE}\"/g" /etc/pgl/pglcmd.conf	
+						perl -pi -e "s/$SEARCH/WHITE_TCP_OUT=\"25 80 443 465 ${CAKEBOXPORT} ${NGINXHTTPPORT} ${NGINXHTTPSPORT} ${WEBMINPORT} ${NEWFTPPORT} ${NEWSSHPORT} ${NEWFTPDATAPORT} ${FTP_PASSIVE}\"/g" /etc/pgl/pglcmd.conf	
 						
 						SEARCH=$(cat /etc/pgl/pglcmd.conf | grep "WHITE_UDP_OUT=")
 						perl -pi -e "s/$SEARCH/WHITE_UDP_OUT=\"${OVPNPORT1} ${OVPNPORT2}\"/g" /etc/pgl/pglcmd.conf
@@ -369,7 +369,7 @@ case $1 in
 						perl -pi -e "s/$SEARCH/WHITE_UDP_IN=\"\"/g" /etc/pgl/pglcmd.conf
 						
 						SEARCH=$(cat /etc/pgl/pglcmd.conf | grep "WHITE_TCP_OUT=")
-						perl -pi -e "s/$SEARCH/WHITE_TCP_OUT=\"80 443 ${CAKEBOXPORT} ${NGINXHTTPPORT} ${NGINXHTTPSPORT} ${WEBMINPORT} ${NEWFTPPORT} ${NEWSSHPORT} ${OVPNPORT1} ${OVPNPORT2} ${NEWFTPDATAPORT} ${FTP_PASSIVE}\"/g" /etc/pgl/pglcmd.conf					
+						perl -pi -e "s/$SEARCH/WHITE_TCP_OUT=\"25 80 443 465 ${CAKEBOXPORT} ${NGINXHTTPPORT} ${NGINXHTTPSPORT} ${WEBMINPORT} ${NEWFTPPORT} ${NEWSSHPORT} ${OVPNPORT1} ${OVPNPORT2} ${NEWFTPDATAPORT} ${FTP_PASSIVE}\"/g" /etc/pgl/pglcmd.conf					
 					
 						SEARCH=$(cat /etc/pgl/pglcmd.conf | grep "WHITE_UDP_OUT=")
 						perl -pi -e "s/$SEARCH/WHITE_UDP_OUT=\"\"/g" /etc/pgl/pglcmd.conf
