@@ -25,7 +25,7 @@ source /etc/MySB/inc/includes_before
 ##################### FIRST LINE #####################################
 
 #### install
-PackagesManage install "postfix stunnel4"
+PackagesManage install "postfix stunnel4 mailutils libsasl2-2 libsasl2-modules"
  
 #### Create certificates
 ScriptInvoke 'source' '/etc/MySB/install/Certificates' 'CreateServiceCertificate' 'postfix'
