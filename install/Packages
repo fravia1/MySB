@@ -28,7 +28,7 @@ source /etc/MySB/inc/includes_before
 PackagesManage purge "heirloom-mailx"
 
 #### Install packages
-PackagesManage install "subversion htop ntpdate build-essential pkg-config libcurl4-openssl-dev libsigc++-2.0-dev libncurses5-dev vim nano curl libxmlrpc-c3-dev unzip zip ffmpeg automake libtool libcppunit-dev python ca-certificates libxml2-dev iperf gnutls-bin openssl bridge-utils whois"
+PackagesManage install "subversion htop ntpdate build-essential pkg-config libcurl4-openssl-dev libsigc++-2.0-dev libncurses5-dev vim nano curl libxmlrpc-c3-dev unzip zip ffmpeg automake libtool libcppunit-dev python ca-certificates libxml2-dev iperf gnutls-bin openssl bridge-utils whois dnsutils"
 
 PackagesManage install "rar"
 if [ $? -gt 0 ]; then
