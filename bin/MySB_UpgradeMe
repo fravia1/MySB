@@ -24,71 +24,69 @@ source /etc/MySB/inc/includes_before
 #
 ##################### FIRST LINE #####################################
 #
-# Usage:	MySB_UpgradeMe <version>
+# Usage:	MySB_UpgradeMe
 #
 ##################### FIRST LINE #####################################
 
-if [ "$USAGE" == "ON" ]; then
-	if [ "`screen -ls | grep MySB_UpgradeMe`" == "" ]; then
-		if [ ! $1 ]; then
-			echo -e "${CBLUE}Usage:$CEND	${CYELLOW}MySB_UpgradeMe$CEND ${CGREEN}<version>$CEND"
-			exit
-		else
-			MYSBCURRENTVERSION=$1
-		fi
+#### Update actual repo
+ScriptInvoke 'source' '/etc/MySB/bin/MySB_UpdateGitHubRepo'
+
+#### Check if new version
+MySB_NewVersion="`cat /etc/MySB/version`"
+MySB_CurrentVersion=`cat /etc/MySB/infos/version.info`
+
+if [ "$MySB_CurrentVersion" == "$MySB_NewVersion" ]; then
+	echo
+	echo -e "${CGREEN}MySB is up to date !$CEND"
+	echo
+	if [ "`cat /etc/MySB/inc/funcs | grep 'EndingScript()'`" == "" ]; then
+		source /etc/MySB/inc/includes_after
+		exit 0
 	else
-		MYSBCURRENTVERSION=$1
+		EndingScript 0
+	fi	
+else
+	echo
+	echo -e "${CYELLOW}MySB$CEND ${CGREEN}$MySB_NewVersion$CEND ${CYELLOW}is avaible !$CEND"
+	echo -e "${CYELLOW}Do you want to continue and upgrade MySB to $CEND${CGREEN}$MySB_NewVersion$CEND ${CYELLOW}?$CEND"
+	echo
+	GetString NO  "Type 'yes' to continue or 'no' to abort ?" CONTINUE NO
+	if [ "$CONTINUE" == "NO" ]; then
+		if [ "`cat /etc/MySB/inc/funcs | grep 'EndingScript()'`" == "" ]; then
+			source /etc/MySB/inc/includes_after
+			exit 0
+		else
+			EndingScript 0
+		fi	
 	fi
 fi
 
-#### system
-#/bin/bash /etc/MySB/bin/MySB_UpgradeSystem
-#source /etc/MySB/bin/MySB_UpgradeSystem
-ScriptInvoke 'source' '/etc/MySB/bin/MySB_UpgradeSystem'
+#### Backup
+DateTime="`/bin/date +%Y%m%d-%H%M%S`"
+if [ ! -d /etc/MySB/upgrade/backup ]; then
+	mkdir -p /etc/MySB/upgrade/backup
+fi
+mv /etc/MySB/upgrade/backup /tmp/MySB_backup_$DateTime
+tar -zcvf /tmp/MySB_backup_$DateTime/Backup-$DateTime-$MySB_CurrentVersion.tar.gz /etc/MySB
+mv /tmp/MySB_backup_* /etc/MySB/upgrade/backup
 
 #### MySB Script GitHub
 cd /etc/MySB/
 sudo git fetch --all
 sudo git stash
-sudo git checkout -b $MYSBCURRENTVERSION origin/$MYSBCURRENTVERSION
+sudo git checkout -b $MySB_NewVersion origin/$MySB_NewVersion
 sudo git pull
 
-echo "$MYSBCURRENTVERSION" > /etc/MySB/infos/version.info
+#### Update version info
+echo "$MySB_NewVersion" > /etc/MySB/infos/version.info
+rm /etc/MySB/files/banner_*
 
-if [ ! -d /etc/MySB/sources ]; then
-	mkdir -p /etc/MySB/sources 1>> /tmp/$0.log
-fi		
-if [ ! -d /etc/MySB/users ]; then
-	mkdir -p /etc/MySB/users 1>> /tmp/$0.log
+#### Completing the upgrade
+if [ -f /etc/MySB/upgrade/From_$MySB_CurrentVersion-to-$MySB_NewVersion.bsh ]; then
+	/bin/bash /etc/MySB/upgrade/From_$MySB_CurrentVersion-to-$MySB_NewVersion.bsh
 fi
-if [ ! -d /etc/MySB/infos ]; then
-	mkdir -p /etc/MySB/infos 1>> /tmp/$0.log
-fi
-if [ ! -d /etc/MySB/logs ]; then
-	mkdir -p /etc/MySB/logs 1>> /tmp/$0.log
-fi		
-if [ ! -d /etc/MySB/files ]; then
-	mkdir -p /etc/MySB/files 1>> /tmp/$0.log
-fi		
-if [ ! -d /etc/MySB/web/logs ]; then
-	mkdir -p /etc/MySB/web/logs 1>> /tmp/$0.log
-fi
-
-chmod +x /etc/MySB/MySB_Install.sh
-chmod +x /etc/MySB/MySB_CleanAll.sh
-chmod +x /etc/MySB/bin/*
-chmod +x /etc/MySB/scripts/*
-chmod +x /etc/MySB/install/*
-
-dos2unix /etc/MySB/*
-dos2unix /etc/MySB/inc/*
-dos2unix /etc/MySB/bin/*
-dos2unix /etc/MySB/files/*
-dos2unix /etc/MySB/scripts/*
-dos2unix /etc/MySB/install/*
-dos2unix /etc/MySB/templates/*
 
 # -----------------------------------------
 source /etc/MySB/inc/includes_after
 # -----------------------------------------
-##################### LAST LINE ######################################        
+##################### LAST LINE ######################################
