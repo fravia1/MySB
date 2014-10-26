@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Mysb by toulousain79</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Mysb</h1>
+          <h2>My SeedBox</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/toulousain79/MySB/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/toulousain79/MySB/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/toulousain79/MySB" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1></h1>
+
+<h4>
+<a name="this-script-is-not-intended-to-solicit-illegal-actions-i-can-not-be-held-responsible-for-the-use-that-you-could-doing-it-thank-you-to-reconsider-the-installation-and-use-of-mysb-i-developed-this-script-only-for-pleasure-and-passion-for-my-job" class="anchor" href="#this-script-is-not-intended-to-solicit-illegal-actions-i-can-not-be-held-responsible-for-the-use-that-you-could-doing-it-thank-you-to-reconsider-the-installation-and-use-of-mysb-i-developed-this-script-only-for-pleasure-and-passion-for-my-job"><span class="octicon octicon-link"></span></a>This script is not intended to solicit illegal actions! I can not be held responsible for the use that you could doing it! Thank you to reconsider the installation and use of MySB. I developed this script only for pleasure and passion for my job.</h4>
+
+<h1></h1>
+
+<h1>
+<a name="my-seedbox" class="anchor" href="#my-seedbox"><span class="octicon octicon-link"></span></a>My SeedBox</h1>
+
+<p>This script is a fork of Notos' Script (base v2.1.9) avaible at <a href="https://github.com/Notos/seedbox-from-scratch/">https://github.com/Notos/seedbox-from-scratch/</a>, combined with tuto of Mondedie.fr avaible at "<a href="http://mondedie.fr/viewtopic.php?id=5302">http://mondedie.fr/viewtopic.php?id=5302</a>".</p>
+
+<p>MySB is a seedbox platform for multi-users.</p>
+
+<h5>
+<a name="current-version--v11" class="anchor" href="#current-version--v11"><span class="octicon octicon-link"></span></a>Current version = v1.1</h5>
+
+<h6>
+<a name="last-stable-version--v11" class="anchor" href="#last-stable-version--v11"><span class="octicon octicon-link"></span></a>Last stable version = v1.1</h6>
+
+<h2>
+<a name="installed-software" class="anchor" href="#installed-software"><span class="octicon octicon-link"></span></a>Installed software</h2>
+
+<pre><code>* rTorrent (rakshasa) v0.9.2 with SSL
+* libTorrrent (rakshasa) v13.2
+* ruTorrent (SVN) + official plugins (SVN)
+* NginX (SSL, specific port and some customizations)
+* PHP5-FPM (php5-apcu, FastCGI, SSL)
+* SFTP with Chroot
+* vsftpd (TLS)
+* Postfix with SMTP authentication (Gmail, Free, Ovh and Yahoo)
+</code></pre>
+
+<h2>
+<a name="services-available" class="anchor" href="#services-available"><span class="octicon octicon-link"></span></a>Services available</h2>
+
+<pre><code>* Fail2ban (optionnal but recommended)
+* Seedbox-Manager (optionnal but recommended)
+* OpenVPN (optionnal); Multi TUN configuration, with or without redirection of traffic. Add AES-NI support (Not valid for OpenVZ Container).
+* Webmin (optionnal)
+* BlockList usage (optionnal) (PeerGuardian or rTorrent)
+* CakeBoxLight (optionnal)
+* PlexMedia Server (optionnal)
+* Samba share for each users (VPN access)
+* NFS share for each users (VPN access)
+* Get SSL certificates for each tracker avaible with ruTorrent
+</code></pre>
+
+<h2>
+<a name="additional-rutorrent-plugins" class="anchor" href="#additional-rutorrent-plugins"><span class="octicon octicon-link"></span></a>Additional ruTorrent plugins</h2>
+
+<pre><code>* Chat
+* Logoff
+* tAdd-Labels
+* Filemanager
+* Mediastream
+* Fileshare
+* NFO
+* RatioColor
+* Theme: Oblivion
+* FileUpload
+* Stream
+* Favicons trackers
+</code></pre>
+
+<h2>
+<a name="some-custom-settings" class="anchor" href="#some-custom-settings"><span class="octicon octicon-link"></span></a>Some custom settings</h2>
+
+<pre><code>* Using of DNSCrypt with Bind9 as dns caching
+</code></pre>
+
+<h2>
+<a name="before-installation" class="anchor" href="#before-installation"><span class="octicon octicon-link"></span></a>Before installation</h2>
+
+<p>You need to have a "blank" server installation.
+After that access your box using a SSH client, like PuTTY.</p>
+
+<h1>
+<a name="warnings" class="anchor" href="#warnings"><span class="octicon octicon-link"></span></a>Warnings</h1>
+
+<h4>
+<a name="openvz-containers" class="anchor" href="#openvz-containers"><span class="octicon octicon-link"></span></a>OpenVZ Containers</h4>
+
+<p>--&gt; PeerGuardian, it's not possible to install it in your OpenVZ Container.</p>
+
+<pre><code>Module 'xt_mark' is mandatory for PeerGuardian. Currently, I have not found solution. The subject is pending.
+</code></pre>
+
+<p>--&gt; OpenVPN, you must follow this link BEFORE install 'MySB'.</p>
+
+<pre><code>https://openvpn.net/index.php/access-server/docs/admin-guides/186-how-to-run-access-server-on-a-vps-container.html
+</code></pre>
+
+<h6>
+<a name="note-you-must-have-a-swap-partition-for-systems-with-less-than-2gb-of-ram" class="anchor" href="#note-you-must-have-a-swap-partition-for-systems-with-less-than-2gb-of-ram"><span class="octicon octicon-link"></span></a>NOTE: You must have a swap partition for systems with less than 2GB of RAM!</h6>
+
+<pre><code>--&gt; Your swap partition should be at least equal to your RAM.
+</code></pre>
+
+<h6>
+<a name="note-if-you-dont-know-linux-enough" class="anchor" href="#note-if-you-dont-know-linux-enough"><span class="octicon octicon-link"></span></a>NOTE: If you don't know Linux ENOUGH:</h6>
+
+<pre><code>--&gt; DO NOT use capital letters, all your usernames should be written in lowercase.
+--&gt; DO NOT upgrade anything in your box, ask in the thread before even thinking about it.
+--&gt; DO NOT try to reconfigure packages using other tutorials.
+</code></pre>
+
+<h2>
+<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h2>
+
+<p>Just copy and paste those commands on your terminal:</p>
+
+<pre><code>wget --no-check-certificate -N https://raw.githubusercontent.com/toulousain79/MySB/v1.1/MySB_Install.sh
+bash MySB_Install.sh
+</code></pre>
+
+<p>If you lose connection during installation, restart the SSH session and run the following command:</p>
+
+<pre><code>screen -r MySB
+</code></pre>
+
+<p>Beware, during installation, the SSH port will be changed. If a port session 22 does not work, try with the new port that you have selected.</p>
+
+<h6>
+<a name="note-1-you-must-be-logged-as-root-to-run-this-installation-or-use-sudo" class="anchor" href="#note-1-you-must-be-logged-as-root-to-run-this-installation-or-use-sudo"><span class="octicon octicon-link"></span></a>NOTE 1: You must be logged as root to run this installation or use sudo.</h6>
+
+<h6>
+<a name="note-2-at-the-end-of-the-installation-the-server-will-restart-automatically-and-you-will-receive-an-e-mail-summarizing" class="anchor" href="#note-2-at-the-end-of-the-installation-the-server-will-restart-automatically-and-you-will-receive-an-e-mail-summarizing"><span class="octicon octicon-link"></span></a>NOTE 2: At the end of the installation, the server will restart automatically and you will receive an e-mail summarizing.</h6>
+
+<h6>
+<a name="note-3-the-first-thing-to-do-once-you-have-received-the-email-is-to-add-your-ips-and-change-the-temporary-password" class="anchor" href="#note-3-the-first-thing-to-do-once-you-have-received-the-email-is-to-add-your-ips-and-change-the-temporary-password"><span class="octicon octicon-link"></span></a>NOTE 3: The first thing to do once you have received the email, is to add your IPs and change the temporary password.</h6>
+
+<h2>
+<a name="how-to-upgrade-from-v10" class="anchor" href="#how-to-upgrade-from-v10"><span class="octicon octicon-link"></span></a>How to upgrade from v1.0</h2>
+
+<p>Just copy and paste those commands on your terminal:</p>
+
+<pre><code>MySB_UpdateGitHubRepo
+MySB_UpgradeMe
+</code></pre>
+
+<h2>
+<a name="commands" class="anchor" href="#commands"><span class="octicon octicon-link"></span></a>Commands</h2>
+
+<p>After installing you will have access to the following commands to be used directly in terminal.</p>
+
+<pre><code>* MySB_ChangeUserPassword
+* MySB_CreateUser
+* MySB_DeleteUser
+* MySB_UpdateGitHubRepo (update actual repository)
+* MySB_RefreshMe (refresh some parts of MySB)
+* MySB_UpgradeMe (to migrate to a new version of MySB)
+* MySB_UpgradeSystem (simply upgrade your system APT upgrade)
+</code></pre>
+
+<p>Next scripts are avaible too.</p>
+
+<pre><code>* '/etc/MySB/scripts/BlockList.sh', use this for generate blocklist for rTorrent with 'ipv4_filter.load' command.
+* '/etc/MySB/scripts/FirewallAndSecurity.sh [clean|new]', use this for generate all security options (PeerGuardian, IPtables, Fail2Ban, Nginx IP restricted access, ...)
+* '/etc/MySB/scripts/GetTrackersCert.sh', use this for get all SSL certificates for all tracker avaibled with ruTorrent. You can add more trackers in '/etc/MySB/inc/trackers'.
+</code></pre>
+
+<p>You can find others scripts in '/etc/MySB/scripts/'. This others scripts are added in cron job.</p>
+
+<h6>
+<a name="note-while-executing-them-if-sudo-is-needed-they-will-ask-for-a-password" class="anchor" href="#note-while-executing-them-if-sudo-is-needed-they-will-ask-for-a-password"><span class="octicon octicon-link"></span></a>NOTE: While executing them, if sudo is needed, they will ask for a password.</h6>
+
+<h2>
+<a name="services" class="anchor" href="#services"><span class="octicon octicon-link"></span></a>Services</h2>
+
+<p>To access services installed on your new server, point your browser to the following address:</p>
+
+<pre><code>https://&lt;Server IP or Server Name&gt;:&lt;https NginX port&gt;/MySB/SeedboxInfo.php
+</code></pre>
+
+<h2>
+<a name="seedbox-manager" class="anchor" href="#seedbox-manager"><span class="octicon octicon-link"></span></a>Seedbox-Manager</h2>
+
+<p>The seedbox web-manager application is an interface to restart an rtorrent user session. 
+It is also not currently: </p>
+
+<pre><code>* links to rutorrent and in Cakebox configurable navbar. 
+* a reminder of ids ftp and sftp user. 
+* a support module with deactivatable ticket. 
+* server statistics (load average, uptime). 
+* user information (disk space, visitor IP address). 
+* a tool to generate configuration files filezilla and Transdroid. 
+* a space administrator to easily manage the configuration of your users 
+* A page parameter to disable the blocks you do not use. 
+</code></pre>
+
+<p>Author: backtoback (c) &amp; Magicalex (php) &amp; hydrog3n (php).</p>
+
+<pre><code>https://github.com/Magicalex/seedbox-manager/
+</code></pre>
+
+<h2>
+<a name="blocklist" class="anchor" href="#blocklist"><span class="octicon octicon-link"></span></a>BlockList</h2>
+
+<p>BlockList usage (optionnal), PeerGuardian or directly via rTorrent.
+Depending on your system, it is possible to use: </p>
+
+<h4>
+<a name="peerguardian" class="anchor" href="#peerguardian"><span class="octicon octicon-link"></span></a>PeerGuardian</h4>
+
+<pre><code>* By default, some list are activated. Check "/etc/pgl/blocklists.list".
+* Many tracker sites are allowed, but only private trackers. Check "/etc/pgl/allow.p2p".
+</code></pre>
+
+<h6>
+<a name="note-do-not-try-to-add-your-rtorrents-ports-in-the-list-of-incoming-ports-allowed-in-peerguardian-pglcmdconf-" class="anchor" href="#note-do-not-try-to-add-your-rtorrents-ports-in-the-list-of-incoming-ports-allowed-in-peerguardian-pglcmdconf-"><span class="octicon octicon-link"></span></a>NOTE: Do not try to add your rtorrents ports in the list of incoming ports allowed in PeerGuardian (pglcmd.conf) !!!</h6>
+
+<h6>
+<a name="using-peerguardian-will-not-have-much-sense-" class="anchor" href="#using-peerguardian-will-not-have-much-sense-"><span class="octicon octicon-link"></span></a>Using PeerGuardian will not have much sense ...</h6>
+
+<h6>
+<a name="rather-prefer-permission-trackers-via-the-allowp2p-peerguardian-file-to-do-this-edit-the-etcmysbinctrackers-file-and-add-only-the-domain-of-your-tracker" class="anchor" href="#rather-prefer-permission-trackers-via-the-allowp2p-peerguardian-file-to-do-this-edit-the-etcmysbinctrackers-file-and-add-only-the-domain-of-your-tracker"><span class="octicon octicon-link"></span></a>Rather prefer permission trackers via the "allow.p2p" PeerGuardian file. To do this, edit the "/etc/MySB/inc/trackers" file and add only the domain of your tracker.</h6>
+
+<h6>
+<a name="then-use-the-command-bash-etcmysbscriptsgettrackerscertsh-this-will-retrieve-all-ssl-certificates-if-available-and-complete-the-list-of-peerguardian" class="anchor" href="#then-use-the-command-bash-etcmysbscriptsgettrackerscertsh-this-will-retrieve-all-ssl-certificates-if-available-and-complete-the-list-of-peerguardian"><span class="octicon octicon-link"></span></a>Then use the command "bash /etc/MySB/scripts/GetTrackersCert.sh." This will retrieve all SSL certificates (if available) and complete the list of PeerGuardian.</h6>
+
+<p>OR</p>
+
+<h4>
+<a name="rtorrent-with-ipv4_filterload" class="anchor" href="#rtorrent-with-ipv4_filterload"><span class="octicon octicon-link"></span></a>rTorrent with ipv4_filter.load</h4>
+
+<pre><code>* By default, some list are activated. Check "/etc/MySB/inc/blocklist".
+* All list are avaible in "/etc/MySB/inc/blocklist".
+* Comment the line with '#' if you want to exclude a list OR comment out the line with deleting '#' if you want to activate it.
+* Example: #BLUETACK_ADS="http://....." to exclude ADS Bluetack list.   
+* And do "bash /etc/MySB/scripts/BlockList.sh" for generate the new list for each users.
+
+NB: The script compile one file with all list, and make cleaning rules.
+NB: Beware, if you have not enough memory, choising too many list will make you system very slow!
+</code></pre>
+
+<h2>
+<a name="openvpn" class="anchor" href="#openvpn"><span class="octicon octicon-link"></span></a>OpenVPN</h2>
+
+<p>To use your VPN you will need a VPN client compatible with <a href="http://openvpn.net/index.php?option=com_content&amp;id=357">OpenVPN</a>, necessary files to configure your connection are in this link in your box:</p>
+
+<pre><code>http://&lt;Server IP or Server Name&gt;:&lt;https NginX port&gt;/MySB/OpenVPN.php` and use it in any OpenVPN client.
+</code></pre>
+
+<h4>
+<a name="for-openvz-you-must-validate-the-prerequisites-on-this-page-first-otherwise-openvpn-will-not-be-functional" class="anchor" href="#for-openvz-you-must-validate-the-prerequisites-on-this-page-first-otherwise-openvpn-will-not-be-functional"><span class="octicon octicon-link"></span></a>For OpenVZ, you must validate the prerequisites on this page first. Otherwise, OpenVPN will not be functional.</h4>
+
+<pre><code>https://openvpn.net/index.php/access-server/docs/admin-guides/186-how-to-run-access-server-on-a-vps-container.html
+</code></pre>
+
+<h5>
+<a name="nfs-and-samba-share-with-openvpn" class="anchor" href="#nfs-and-samba-share-with-openvpn"><span class="octicon octicon-link"></span></a>NFS and Samba share with OpenVPN</h5>
+
+<p>For NFS, you can mount the /home//rtorrent like that. The IP address can be different depending on the OpenVPN configuration that you have selected.</p>
+
+<pre><code>mount -t nfs [10.0.0.1|10.0.1.1]:/home/&lt;username&gt;/rtorrent &lt;mount_dir&gt; -o  -o nocto,noacl,noatime,nodiratime,nolock,rsize=8192,vers=3,ro,udp
+</code></pre>
+
+<p>For Samba, you can mount the /home/ like that. The IP address can be different depending on the OpenVPN configuration that you have selected.</p>
+
+<pre><code>mount - &lt;mount_dir&gt; -t cifs -o noatime,nodiratime,UNC=//[10.0.0.1|10.0.1.1]/&lt;username&gt;,username=&lt;username&gt;,password=&lt;your_password&gt;
+</code></pre>
+
+<h6>
+<a name="note-i-personally-use-my-router-asus-rt-n16-firmware-tomatousb-by-shibby-as-openvpn-client-from-there-i-mount-the-nfs-share-corresponding-to-my-homedir-on-the-mysb-box" class="anchor" href="#note-i-personally-use-my-router-asus-rt-n16-firmware-tomatousb-by-shibby-as-openvpn-client-from-there-i-mount-the-nfs-share-corresponding-to-my-homedir-on-the-mysb-box"><span class="octicon octicon-link"></span></a>NOTE: I personally use my router Asus RT-N16 (firmware TomatoUSB by Shibby) as OpenVPN client. From there, I mount the NFS share corresponding to my homedir on the MySB box.</h6>
+
+<p>Then I add my mount point in the DLNA server on my RT-N16. 
+Miracle, I can stream my files with my Freebox Revolution!</p>
+
+<h2>
+<a name="dnscrypt-proxy" class="anchor" href="#dnscrypt-proxy"><span class="octicon octicon-link"></span></a>DNScrypt-proxy</h2>
+
+<p>By default, DNScrypt-proxy will use OpenDNS resolver (opendns). 
+The full list of DNScrypt resolvers is available at: <a href="https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv">https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv</a> </p>
+
+<p>It is possible to change the resolver name at any time using the following command:</p>
+
+<pre><code>dnscrypt-proxy service restart &lt;resolver_name&gt;
+</code></pre>
+
+<p>To clean Bind cache, just restart service.</p>
+
+<h6>
+<a name="1---clean-bind9-cache" class="anchor" href="#1---clean-bind9-cache"><span class="octicon octicon-link"></span></a>1 - Clean Bind9 cache</h6>
+
+<pre><code>service bind9 restart
+</code></pre>
+
+<h6>
+<a name="2---change-dnscrypt-resolver-name" class="anchor" href="#2---change-dnscrypt-resolver-name"><span class="octicon octicon-link"></span></a>2 - Change DNScrypt resolver name</h6>
+
+<pre><code>service dnscrypt-proxy restart dnscrypt.eu-nl
+</code></pre>
+
+<h6>
+<a name="important-with-openvz-container-to-complete-the-installation-of-dnscrypt-proxy-you-must-replace-your-existing-dns-config-etcresolvconf-by-the-loopback-address" class="anchor" href="#important-with-openvz-container-to-complete-the-installation-of-dnscrypt-proxy-you-must-replace-your-existing-dns-config-etcresolvconf-by-the-loopback-address"><span class="octicon octicon-link"></span></a>IMPORTANT: With OpenVZ container, to complete the installation of DNScrypt-proxy, you must replace your existing DNS config (/etc/resolv.conf), by the loopback address.</h6>
+
+<h6>
+<a name="important-its-necessary-to-make-the-change-via-the-host-eg-proxmox-otherwise-you-will-lose-your-configuration-on-next-reboot-you-must-replace-yours-nameserver-by-nameserver-127001-etcresolvconf" class="anchor" href="#important-its-necessary-to-make-the-change-via-the-host-eg-proxmox-otherwise-you-will-lose-your-configuration-on-next-reboot-you-must-replace-yours-nameserver-by-nameserver-127001-etcresolvconf"><span class="octicon octicon-link"></span></a>IMPORTANT: It's necessary to make the change via the host (eg Proxmox), otherwise you will lose your configuration on next reboot. You must replace yours nameserver by 'nameserver 127.0.0.1' (/etc/resolv.conf).</h6>
+
+<h2>
+<a name="supported-and-tested-servers" class="anchor" href="#supported-and-tested-servers"><span class="octicon octicon-link"></span></a>Supported and tested servers</h2>
+
+<h4>
+<a name="debian-7---x86_64-wheezy" class="anchor" href="#debian-7---x86_64-wheezy"><span class="octicon octicon-link"></span></a>Debian 7 - x86_64 (Wheezy)</h4>
+
+<pre><code>--&gt; Tested on Online.net with "DEDIBOX® SC GEN2" and "DEDIBOX® XC"
+--&gt; Tested on OpenVZ Container with ProxMox, work fine ! (read comment in top of this page)
+--&gt; Tested on OVH with "Kimsufi"
+</code></pre>
+
+<h4>
+<a name="ubuntu-or-older-debian-may-worked-but-not-tested" class="anchor" href="#ubuntu-or-older-debian-may-worked-but-not-tested"><span class="octicon octicon-link"></span></a>Ubuntu or older Debian may worked, but not tested...</h4>
+
+<h2>
+<a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h2>
+
+<p>Take a look at 'Changelog.md', it's all there.</p>
+
+<h2>
+<a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h2>
+
+<p>There is no real support for this script.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Created by toulousain79</p>
+
+<p>--&gt; Licensed under the MIT license: <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
+
+<h2>
+<a name="sources-inspiration-and-tools" class="anchor" href="#sources-inspiration-and-tools"><span class="octicon octicon-link"></span></a>Sources, inspiration and tools</h2>
+
+<ul>
+<li>Notos' script:        <a href="https://github.com/Notos/seedbox-from-scratch/">https://github.com/Notos/seedbox-from-scratch/</a>
+</li>
+<li>Mondedie.fr script:       <a href="https://bitbucket.org/exrat/install-rutorrent">https://bitbucket.org/exrat/install-rutorrent</a><br>
+</li>
+<li>rTorrent Community:   <a href="http://community.rutorrent.org/">http://community.rutorrent.org/</a> </li>
+<li>rTorrent config info:     <a href="http://libtorrent.rakshasa.no/rtorrent/rtorrent.1.html">http://libtorrent.rakshasa.no/rtorrent/rtorrent.1.html</a>
+</li>
+<li>rTorrent tweaks:      <a href="https://calomel.org/rtorrent_mods.html">https://calomel.org/rtorrent_mods.html</a>
+</li>
+<li>rTorrent SSL: <a href="https://forums.gentoo.org/viewtopic-t-710876-start-0.html">https://forums.gentoo.org/viewtopic-t-710876-start-0.html</a>
+</li>
+<li>OpenSSL configuration file:   <a href="http://www.eclectica.ca/howto/ssl-cert-howto.php">http://www.eclectica.ca/howto/ssl-cert-howto.php</a>
+</li>
+<li>OpenSSL AES-NI support:   <a href="http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html">http://openssl.6102.n7.nabble.com/having-a-lot-of-troubles-trying-to-get-AES-NI-working-td44285.html</a>
+</li>
+<li>Text ASCII Art Generator: <a href="http://patorjk.com/software/taag/">http://patorjk.com/software/taag/</a>
+</li>
+<li>Why nginx-extras + infos: <a href="https://wiki.debian.org/fr/Nginx">https://wiki.debian.org/fr/Nginx</a>
+</li>
+<li>NginX config: <a href="http://wiki.nginx.org/CoreModule#worker_rlimit_nofile">http://wiki.nginx.org/CoreModule#worker_rlimit_nofile</a>
+</li>
+<li>NginX config: <a href="http://trac.evolix.net/infogerance/wiki/HowtoNginx">http://trac.evolix.net/infogerance/wiki/HowtoNginx</a>
+</li>
+<li>NginX config: <a href="https://library.linode.com/web-servers/nginx/configuration/basic">https://library.linode.com/web-servers/nginx/configuration/basic</a>
+</li>
+<li>NginX with SSL:   <a href="http://nginx.org/en/docs/http/configuring_https_servers.html">http://nginx.org/en/docs/http/configuring_https_servers.html</a>
+</li>
+<li>OpenSSL CAconfig: <a href="http://www.ulduzsoft.com/2012/01/creating-a-certificate-authority-and-signing-the-ssl-certificates-using-openssl/">http://www.ulduzsoft.com/2012/01/creating-a-certificate-authority-and-signing-the-ssl-certificates-using-openssl/</a>
+</li>
+<li>VSFTDs TLS:   <a href="http://www.howtoforge.com/setting-up-vsftpd-tls-on-debian-squeeze">http://www.howtoforge.com/setting-up-vsftpd-tls-on-debian-squeeze</a>
+</li>
+<li>VSFTPd Debian: <a href="https://howto.biapy.com/fr/debian-gnu-linux/serveurs/autres/installer-le-serveur-ftp-vsftpd-sur-debian">https://howto.biapy.com/fr/debian-gnu-linux/serveurs/autres/installer-le-serveur-ftp-vsftpd-sur-debian</a>
+</li>
+<li>VSFTPd ManPage: <a href="https://security.appspot.com/vsftpd/vsftpd_conf.html">https://security.appspot.com/vsftpd/vsftpd_conf.html</a>
+</li>
+<li>DNS Server:   <a href="http://en.m.wikipedia.org/wiki/Comparison_of_DNS_server_software">http://en.m.wikipedia.org/wiki/Comparison_of_DNS_server_software</a>
+</li>
+<li>DNScrypt infos:   <a href="http://antix.freeforums.org/secure-dns-with-dnscrypt-t3588.html">http://antix.freeforums.org/secure-dns-with-dnscrypt-t3588.html</a>
+</li>
+<li>DNScrypt + Bind9: <a href="http://cavaencoreparlerdebits.fr/blog/2013/10/encrypt-your-dns-request-with-opendns-dnscrypt">http://cavaencoreparlerdebits.fr/blog/2013/10/encrypt-your-dns-request-with-opendns-dnscrypt</a>
+</li>
+</ul>
+
+<h2>
+<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>Change ruTorrent directory name (/rutorrent/)</li>
+<li>Maybe add miniDLNA functionality (with OpenVPN)</li>
+<li>Make some thing for users with dynamic ip for update whitelist in PeerGuardian and Fail2ban.</li>
+<li>Gmail SMTP <a href="https://www.google.com/accounts/DisplayUnlockCaptcha">https://www.google.com/accounts/DisplayUnlockCaptcha</a>
+</li>
+<li>Maybe add OwnCloud possiblity</li>
+<li>Maybe use of SQLight</li>
+<li>NFS over sTunnel ? (<a href="https://w3.physics.illinois.edu/physwiki/doku.php?id=pcs:unix:nfs_over_stunnel">https://w3.physics.illinois.edu/physwiki/doku.php?id=pcs:unix:nfs_over_stunnel</a>)</li>
+<li>SABnzbd option ?</li>
+<li>Subsonic option ?</li>
+<li>Namebench ?</li>
+<li>Maybe use of 'psad' and 'systemd'</li>
+</ul>
+        </section>
+
+        <footer>
+          Mysb is maintained by <a href="https://github.com/toulousain79">toulousain79</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-53486968-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
