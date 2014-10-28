@@ -463,6 +463,14 @@ EOF
 	StatusLSB
 fi
 
+#### OpenVPN
+if [ "$INSTALLOPENVPN" == "YES" ]; then
+	log_daemon_msg "Create OpenVPN account for user $NEWUSER"
+	screen -dmS OpenVPN_Client /bin/bash /etc/MySB/install/OpenVPN client "$NEWUSER" "$PASSWORD";
+	WaitingSTD OpenVPN_Client	
+	StatusLSB
+fi
+
 #### script init
 log_daemon_msg "Creating init script for $NEWUSER"
 cp /etc/MySB/templates/etc.init.rtorrent.template /etc/init.d/rtorrent-$NEWUSER
