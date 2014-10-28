@@ -502,14 +502,6 @@ for seedUser in $LISTUSERS; do
 	#fi
 done
 
-#### OpenVPN
-if [ "$INSTALLOPENVPN" == "YES" ]; then
-	log_daemon_msg "Creating an OpenVPN account for $seedUser"
-	screen -dmS OpenVPN_Client /bin/bash /etc/MySB/install/OpenVPN client "$NEWUSER" "$PASSWORD";
-	WaitingSTD OpenVPN_Client	
-	StatusLSB
-fi
-
 #### iptables
 log_daemon_msg "Creating new rules for iptables"
 screen -dmS FirewallAndSecurity /bin/bash /etc/MySB/scripts/FirewallAndSecurity.sh new;
