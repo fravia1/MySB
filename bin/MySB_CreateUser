@@ -466,7 +466,7 @@ fi
 #### OpenVPN
 if [ "$INSTALLOPENVPN" == "YES" ]; then
 	log_daemon_msg "Create OpenVPN account for user $NEWUSER"
-	screen -dmS OpenVPN_Client /bin/bash /etc/MySB/install/OpenVPN client "$NEWUSER" "$PASSWORD";
+	screen -dmS OpenVPN_Client /bin/bash /etc/MySB/install/OpenVPN client "$NEWUSER";
 	WaitingSTD OpenVPN_Client	
 	StatusLSB
 fi
