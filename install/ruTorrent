@@ -260,6 +260,10 @@ EOF
 		cd /etc/MySB/sources/plowshare
 	fi
 	make install
+	
+	if [ -d /etc/MySB/temp/plowshare* ]; then
+		rm -rf /etc/MySB/temp/plowshare*
+	fi	
 
 	# /usr/share/nginx/html/rutorrent/conf/config.php
 	(
