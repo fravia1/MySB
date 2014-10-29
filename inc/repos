@@ -42,7 +42,7 @@ SVN_rutorrent="http://rutorrent.googlecode.com/svn/trunk/rutorrent"
 # ruTorrent Official Plugins
 SVN_rutorrent_plugins="http://rutorrent.googlecode.com/svn/trunk/plugins"
 
-#### - ruTorrent Plugins
+#### ruTorrent Plugins
 # Chat
 SVN_rutorrent_plugins_CHAT="http://rutorrent-chat.googlecode.com/svn/trunk/"
 # Logoff
