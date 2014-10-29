@@ -36,13 +36,7 @@
 #
 ##################### FIRST LINE #####################################
 
-#### rTorrent / ruTorrent / XmlRpc-C
-# xmlrpc-c
-SVN_xmlrpc="http://svn.code.sf.net/p/xmlrpc-c/code/advanced"
-# libtorrent
-GIT_libtorrent="git://github.com/rakshasa/libtorrent.git"
-# rTorrent
-GIT_rtorrent="git://github.com/rakshasa/rtorrent.git"
+#### ruTorrent
 # ruTorrent
 SVN_rutorrent="http://rutorrent.googlecode.com/svn/trunk/rutorrent"
 # ruTorrent Official Plugins
