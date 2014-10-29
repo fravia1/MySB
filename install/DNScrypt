@@ -65,6 +65,11 @@ if [ "$INSTALLDNSCRYPT" == "YES" ]; then
 			git clone $GIT_libsodium /etc/MySB/sources/libsodium
 		fi
 	fi
+	
+	if [ -d /etc/MySB/temp/libsodium ]; then
+		rm -rf /etc/MySB/temp/libsodium
+	fi	
+	
 	cd /etc/MySB/sources/libsodium/
 	./autogen.sh
 	./configure --enable-minimal
