@@ -27,22 +27,24 @@ source /etc/MySB/inc/includes_before
 GetCertificate() {
 	TRACKER=$1
 	cd /etc/MySB/ssl/trackers/
-		
-	openssl s_client -connect $TRACKER:443 </dev/null 2>/dev/null | sed -n '/BEGIN CERTIFICATE/,/END CERTIFICATE/p' >> ./$TRACKER.crt 
-	if [ -s ./$TRACKER.crt ]; then
-		openssl x509 -in ./$TRACKER.crt -out ./$TRACKER.der -outform DER 
-		openssl x509 -in ./$TRACKER.der -inform DER -out ./$TRACKER.pem -outform PEM
-		if [ -e ./$TRACKER.pem ]; then
-			if [ -f /etc/ssl/certs/$TRACKER.pem ]; then
-				rm /etc/ssl/certs/$TRACKER.pem
-			fi	
-			ln -s /etc/MySB/ssl/trackers/$TRACKER.pem /etc/ssl/certs/$TRACKER.pem
+
+	if [ ! -f /etc/ssl/certs/$TRACKER.pem ]; then
+		openssl s_client -connect $TRACKER:443 </dev/null 2>/dev/null | sed -n '/BEGIN CERTIFICATE/,/END CERTIFICATE/p' >> ./$TRACKER.crt 
+		if [ -s ./$TRACKER.crt ]; then
+			openssl x509 -in ./$TRACKER.crt -out ./$TRACKER.der -outform DER 
+			openssl x509 -in ./$TRACKER.der -inform DER -out ./$TRACKER.pem -outform PEM
+			if [ -e ./$TRACKER.pem ]; then
+				if [ -f /etc/ssl/certs/$TRACKER.pem ]; then
+					rm /etc/ssl/certs/$TRACKER.pem
+				fi	
+				ln -s /etc/MySB/ssl/trackers/$TRACKER.pem /etc/ssl/certs/$TRACKER.pem
+			fi
+			
+			rm ./$TRACKER.der
 		fi
 		
-		rm ./$TRACKER.der
+		rm ./$TRACKER.crt
 	fi
-	
-	rm ./$TRACKER.crt
 	
 	unset TRACKER
 }
@@ -79,7 +81,7 @@ c_rehash &> /dev/null
 StatusLSB
 
 #### Create PeerGuardian P2P file
-if [ -f /etc/pgl/allow.p2p ] && [ -f /etc/MySB/infos/allow.p2p ]; then
+if [ -f /etc/MySB/infos/allow.p2p ]; then
 	mv /etc/MySB/infos/allow.p2p /etc/pgl/allow.p2p
 fi
 
