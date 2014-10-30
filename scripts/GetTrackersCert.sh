@@ -53,20 +53,20 @@ if [ ! -d /etc/MySB/ssl/trackers/ ]; then
 	mkdir /etc/MySB/ssl/trackers/
 fi
 
-LIST_CERTS=$(ls -la /etc/ssl/certs/ | awk '{ print $9 }')
-for Cert in ${LIST_CERTS}; do
-	if [ "$Cert" != "" ] && [ "$Cert" != "." ] && [ "$Cert" != ".." ]; then
+# LIST_CERTS=$(ls -la /etc/ssl/certs/ | awk '{ print $9 }')
+# for Cert in ${LIST_CERTS}; do
+	# if [ "$Cert" != "" ] && [ "$Cert" != "." ] && [ "$Cert" != ".." ]; then
 
-		TARGET=$(ls -la /etc/ssl/certs/$Cert | awk '{ print $11 }')
+		# TARGET=$(ls -la /etc/ssl/certs/$Cert | awk '{ print $11 }')
 
-		if [ ! -f $TARGET ];then
-			rm /etc/ssl/certs/$Cert
-		fi
+		# if [ ! -f $TARGET ];then
+			# rm /etc/ssl/certs/$Cert
+		# fi
 		
-		unset Cert TARGET
-	fi
-done
-unset LIST_CERTS
+		# unset Cert TARGET
+	# fi
+# done
+# unset LIST_CERTS
 
 TrackersListing
 
