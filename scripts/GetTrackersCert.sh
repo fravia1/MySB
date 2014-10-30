@@ -85,6 +85,8 @@ if [ -f /etc/MySB/infos/allow.p2p ]; then
 	mv /etc/MySB/infos/allow.p2p /etc/pgl/allow.p2p
 fi
 
+ScriptInvoke 'source' '/etc/MySB/scripts/FirewallAndSecurity.sh' 'new'
+
 # -----------------------------------------
 source /etc/MySB/inc/includes_after
 # -----------------------------------------
