@@ -687,15 +687,20 @@ TrackersGenerateAddress() {
 	log_daemon_msg "Adding $TRACKER"
 	
 	#TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed -n 2p)"
-	TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed '/#/d')"
+	#TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed '/#/d')"
+	TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | tail -n +2)"
 
 	if [ ! -z "$TRACKER_IPV4" ]; then
-		echo $TRACKER >> /etc/MySB/infos/trackers.list
 		if [ "$MYBLOCKLIST" == "PeerGuardian" ]; then
+			echo $TRACKER >> /etc/MySB/infos/trackers.list
 			for TrackerIp in ${TRACKER_IPV4}; do
 				echo "${TRACKER}:${TrackerIp}-255.255.255.255" >> /etc/MySB/infos/allow.p2p
 			done
 			unset TrackerIp
+			if [ "`cat /etc/MySB/infos/allow.p2p | grep '0.0.0.0'`" != "" ]; then
+				sed -i '/0.0.0.0/d' /etc/MySB/infos/allow.p2p
+				sed -i '/'$TRACKER'/d' /etc/MySB/infos/trackers.list
+			fi				
 		fi
 	fi
 	
@@ -713,15 +718,20 @@ TrackersGenerateAddress() {
 		
 	TRACKER="`echo $PART1`.`echo $PART2`.`echo $PART3`"	
 	#TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed -n 2p)"
-	TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed '/#/d')"
+	#TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | sed '/#/d')"
+	TRACKER_IPV4="$(nslookup ${TRACKER} | grep 'Address:' | awk '{ print $2 }' | tail -n +2)"
 
 	if [ ! -z "$TRACKER_IPV4" ]; then			
-		echo $TRACKER >> /etc/MySB/infos/trackers.list
 		if [ "$MYBLOCKLIST" == "PeerGuardian" ]; then
+			echo $TRACKER >> /etc/MySB/infos/trackers.list
 			for TrackerIp in ${TRACKER_IPV4}; do
 				echo "${TRACKER}:${TrackerIp}-255.255.255.255" >> /etc/MySB/infos/allow.p2p
 			done
 			unset TrackerIp
+			if [ "`cat /etc/MySB/infos/allow.p2p | grep '0.0.0.0'`" != "" ]; then
+				sed -i '/0.0.0.0/d' /etc/MySB/infos/allow.p2p
+				sed -i '/'$TRACKER'/d' /etc/MySB/infos/trackers.list
+			fi			
 		fi
 	fi
 	
