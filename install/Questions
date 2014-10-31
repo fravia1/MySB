@@ -268,6 +268,7 @@ echo "$INSTALLOPENVPN" > /etc/MySB/infos/install_openvpn.info
 echo "$INSTALLPLEXMEDIA" > /etc/MySB/infos/install_plexmedia.info
 echo "$INSTALLCAKEBOX" > /etc/MySB/infos/install_cakebox.info
 echo "$INSTALLDNSCRYPT" > /etc/MySB/infos/install_dnscrypt.info
+echo "$INSTALLLOGWATCH" > /etc/MySB/infos/install_logwatch.info
 	
 # -----------------------------------------
 source /etc/MySB/inc/includes_after
