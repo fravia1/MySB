@@ -62,10 +62,8 @@ case $1 in
 			log_daemon_msg "Manage IP for $2"
 			SeedboxUser="$2"
 			CurrentList="$3"
-			NewList="$4"			
-
+			NewList="$4"
 			perl -pi -e 's/'$CurrentList'/'$NewList'/g' /etc/MySB/users/$SeedboxUser.info
-			SeedboxUsersIPs=`echo $NewList | sed -e "s/,/ /g;"`
 			unset CurrentList NewList SeedboxUser
 			StatusLSB
 		fi	
