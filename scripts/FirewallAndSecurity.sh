@@ -57,7 +57,20 @@ case $1 in
 		fi		
 	;;
 	new)
-		# Seedbox users IPs
+		#### ManageIP.php
+		if [ ! -z "$2" ] && [ ! -z "$3" ] && [ ! -z "$4" ]; then
+			log_daemon_msg "Manage IP for $2"
+			SeedboxUser="$2"
+			CurrentList="$3"
+			NewList="$4"			
+
+			perl -pi -e 's/'$CurrentList'/'$NewList'/g' /etc/MySB/users/$SeedboxUser.info
+			SeedboxUsersIPs=`echo $NewList | sed -e "s/,/ /g;"`
+			unset CurrentList NewList SeedboxUser
+			StatusLSB
+		fi	
+	
+		#### Seedbox users IPs
 		log_daemon_msg "Creating IP white lists"
 		UsersList=`ls /etc/MySB/users/ | grep '.info' | sed 's/.\{5\}$//'`	
 		for SeedboxUser in $UsersList; do
@@ -89,24 +102,13 @@ case $1 in
 		SeedboxUsersIPs=`echo $SeedboxUsersIPs | sed -e "s/^//g;"`
 		StatusLSB
 
-		# Clean users IP Addresses
+		#### Clean users IP Addresses
 		for ip in $SeedboxUsersIPs; do 
 			sed -i '/'$ip'/d' /etc/nginx/locations/MySB.conf
 		done
-		unset ip		
-		if [ ! -z "$2" ] && [ ! -z "$3" ] && [ ! -z "$4" ]; then
-			log_daemon_msg "Clean IP for $2"
-			SeedboxUser="$2"
-			CurrentList="$3"
-			NewList="$4"			
-
-			perl -pi -e 's/'$CurrentList'/'$NewList'/g' /etc/MySB/users/$SeedboxUser.info
-			SeedboxUsersIPs=`echo $NewList | sed -e "s/,/ /g;"`
-			unset CurrentList NewList SeedboxUser
-			StatusLSB
-		fi
+		unset ip
 		
-		# NO spoofing
+		#### NO spoofing
 		if [ -e /proc/sys/net/ipv4/conf/all/rp_filter ]; then
 			log_daemon_msg "No spoofing"
 			for filtre in /proc/sys/net/ipv4/conf/*/rp_filter; do
@@ -115,7 +117,7 @@ case $1 in
 			StatusLSB
 		fi
 		
-		# Modules
+		#### Modules
 		log_daemon_msg "Loading modules"
 		IFS=$','
 		for item in $Modules; do
@@ -127,7 +129,7 @@ case $1 in
 		unset IFS
 		StatusLSB
 
-		# Vidage et suppression des règles existantes :
+		#### Vidage et suppression des règles existantes :
 		log_daemon_msg "Emptying and removal of existing rules"
 		for TABLE in filter nat mangle; do
 			iptables -t $TABLE -F
@@ -135,25 +137,25 @@ case $1 in
 		done
 		StatusLSB
 
-		# Interdire toute connexion entrante et autoriser toute connexion sortante
+		#### Interdire toute connexion entrante et autoriser toute connexion sortante
 		log_daemon_msg "Prohibit any incoming connection and authorize any outgoing connection"
 		iptables -t filter -P INPUT DROP
 		iptables -t filter -P FORWARD DROP
 		iptables -t filter -P OUTPUT ACCEPT	
 		StatusLSB
 		
-		# Ne pas casser les connexions etablies
+		#### Ne pas casser les connexions etablies
 		log_daemon_msg "Do not break established connections"
 		iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 		iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT	
 		StatusLSB
 		
-		# Autoriser loopback
+		#### Autoriser loopback
 		log_daemon_msg "Allow loopback interface"
 		iptables -t filter -A INPUT -i lo -j ACCEPT
 		StatusLSB	
 
-		# ICMP
+		#### ICMP
 		log_daemon_msg "Allow incoming ping for seedbox users only"
 		for ip in $SeedboxUsersIPs; do 
 			iptables -t filter -A INPUT -p icmp -s $ip/32 -j ACCEPT -m comment --comment "ICMP"
@@ -163,43 +165,43 @@ case $1 in
 		done			
 		StatusLSB
 
-		# CakeBox
+		#### CakeBox
 		if [ "$INSTALLCAKEBOX" == "YES" ]; then
 			log_daemon_msg "Allow access to CakeBox"
 			iptables -t filter -A INPUT -p tcp --dport $CAKEBOXPORT -j ACCEPT -m comment --comment "CakeBox"
 			StatusLSB
 		fi
 		
-		# HTTP
+		#### HTTP
 		log_daemon_msg "Allow access to HTTP"
 		iptables -t filter -A INPUT -p tcp --dport $NGINXHTTPPORT -j ACCEPT -m comment --comment "HTTP"
 		StatusLSB
 
-		# HTTPS
+		#### HTTPS
 		log_daemon_msg "Allow access to HTTPs"
 		iptables -t filter -A INPUT -p tcp --dport $NGINXHTTPSPORT -j ACCEPT -m comment --comment "HTTPs"
 		StatusLSB
 
-		# Webmin
+		#### Webmin
 		if [ "$INSTALLWEBMIN" == "YES" ]; then
 			log_daemon_msg "Allow access to Webmin"
 			iptables -t filter -A INPUT -p tcp --dport $WEBMINPORT -j ACCEPT -m comment --comment "Webmin"
 			StatusLSB
 		fi		
 
-		# FTP
+		#### FTP
 		log_daemon_msg "Allow use of FTP"
 		iptables -t filter -A INPUT -p tcp --dport $NEWFTPPORT -j ACCEPT -m comment --comment "FTP"
 		iptables -t filter -A INPUT -p tcp --dport $NEWFTPDATAPORT -j ACCEPT -m comment --comment "FTP Data"
 		iptables -t filter -A INPUT -p tcp --dport 65000:65535 -j ACCEPT -m comment --comment "FTP Passive"
 		StatusLSB		
 
-		# SSH
+		#### SSH
 		log_daemon_msg "Allow access to SSH"
 		iptables -t filter -A INPUT -p tcp --dport $NEWSSHPORT -j ACCEPT -m comment --comment "SSH"
 		StatusLSB
 		
-		# OpenVPN
+		#### OpenVPN
 		if [ "$INSTALLOPENVPN" == "YES" ]; then
 			OVPNPORT1=$OPENVPNPORT
 			(( OPENVPNPORT++ ))
@@ -223,7 +225,7 @@ case $1 in
 			StatusLSB
 		fi
 
-		# PlexMedia Server
+		#### PlexMedia Server
 		if [ "$INSTALLPLEXMEDIA" == "YES" ] && [ -f "/usr/lib/plexmediaserver/start.sh" ]; then
 			log_daemon_msg "Allow use of Plex Media Server on TCP"
 			for PlexTcpPort in $PLEXMEDIA_TCP_PORTS; do 
