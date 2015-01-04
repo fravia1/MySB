@@ -204,10 +204,6 @@ For Samba, you can mount the /home/<username> like that. The IP address can be d
 mount - <mount_dir> -t cifs -o noatime,nodiratime,UNC=//[10.0.0.1|10.0.1.1]/<username>,username=<username>,password=<your_password>
 ```
 
-###### NOTE: I personally use my router Asus RT-N16 (firmware TomatoUSB by Shibby) as OpenVPN client. From there, I mount the NFS share corresponding to my homedir on the MySB box.
-Then I add my mount point in the DLNA server on my RT-N16. 
-Miracle, I can stream my files with my Freebox Revolution!
-
 ## DNScrypt-proxy
 By default, DNScrypt-proxy will use OpenDNS resolver (opendns). 
 The full list of DNScrypt resolvers is available at: https://github.com/jedisct1/dnscrypt-proxy/blob/master/dnscrypt-resolvers.csv 
