@@ -83,6 +83,9 @@ rm /etc/MySB/files/banner_*
 
 #### Completing the upgrade
 if [ -f /etc/MySB/upgrade/From_$MySB_CurrentVersion-to-$MySB_NewVersion.bsh ]; then
+	#### Upgrade System
+	ScriptInvoke 'bash' '/etc/MySB/bin/MySB_UpgradeSystem'
+	
 	echo
 	echo
 	echo -e "${CBLUE}Starting SCREEN session...$CEND"
@@ -95,9 +98,6 @@ if [ -f /etc/MySB/upgrade/From_$MySB_CurrentVersion-to-$MySB_NewVersion.bsh ]; t
 	done
 	screen -r MySB_UpgradeMe
 fi
-
-#### Upgrade System
-#ScriptInvoke 'bash' '/etc/MySB/bin/MySB_UpgradeSystem'
 
 # -----------------------------------------
 source /etc/MySB/inc/includes_after
