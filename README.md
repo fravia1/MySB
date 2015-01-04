@@ -189,10 +189,6 @@ For Samba, you can mount the /home/<username> like that. The IP address can be d
 mount - <mount_dir> -t cifs -o noatime,nodiratime,UNC=//[10.0.0.1|10.0.1.1]/<username>,username=<username>,password=<your_password>
 ```
 
-###### NOTE: I personally use my router Asus RT-N16 (firmware TomatoUSB by Shibby) as OpenVPN client. From there, I mount the NFS share corresponding to my homedir on the MySB box.
-Then I add my mount point in the DLNA server on my RT-N16. 
-Miracle, I can stream my files with my Freebox Revolution!
-
 ## Supported and tested servers
 
 #### Debian 7 - x86_64 (Wheezy)
