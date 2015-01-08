@@ -78,14 +78,14 @@ if [ -d /etc/webmin/firewall/ ]; then
 fi
 
 #### 4 - Update files database
-if hash /usr/bin/updatedb 2>/dev/null && [ "$ScriptName" != "Questions" ]; then
+if hash updatedb 2>/dev/null && [ "$ScriptName" != "Questions" ]; then
 	log_daemon_msg "Update the slocate database (updatedb)"
-	/usr/bin/updatedb
+	updatedb
 	StatusLSB
 fi
-if hash /sbin/ldconfig 2>/dev/null && [ "$ScriptName" != "Questions" ]; then
+if hash ldconfig 2>/dev/null && [ "$ScriptName" != "Questions" ]; then
 	log_daemon_msg "Configure dynamic linker run-time bindings (ldconfig)"
-	/sbin/ldconfig
+	ldconfig
 	StatusLSB
 fi
 
