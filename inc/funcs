@@ -813,7 +813,9 @@ ScriptInvoke() {
 			#### Prepare our script
 			# vars & funcs
 			echo "source /etc/MySB/inc/vars" > /etc/MySB/temp/${SCRIPT_name}_${SCRIPT}.invoked
-			echo "source /etc/MySB/inc/repos" >> /etc/MySB/temp/${SCRIPT_name}_${SCRIPT}.invoked
+			if [ -f /etc/MySB/inc/repos ]; then
+				echo "source /etc/MySB/inc/repos" >> /etc/MySB/temp/${SCRIPT_name}_${SCRIPT}.invoked
+			fi
 			echo "source /etc/MySB/inc/funcs" >> /etc/MySB/temp/${SCRIPT_name}_${SCRIPT}.invoked
 			if [ -f /lib/lsb/init-functions ]; then
 				echo "source /lib/lsb/init-functions" >> /etc/MySB/temp/${SCRIPT_name}_${SCRIPT}.invoked
