@@ -28,8 +28,15 @@ source /etc/MySB/inc/includes_before
 #
 ##################### FIRST LINE #####################################
 
+#### Create security rules
+ScriptInvoke 'source' '/etc/MySB/scripts/FirewallAndSecurity.sh' 'new'
+
+#### Restart Bind & DNScrypt
+service bind9 restart
+ManageServices start "dnscrypt-proxy"
+
 #### Update actual repo
-ScriptInvoke 'source' '/etc/MySB/bin/MySB_UpdateGitHubRepo'
+#ScriptInvoke 'source' '/etc/MySB/bin/MySB_UpdateGitHubRepo'
 
 #### Check if new version
 MySB_NewVersion="`cat /etc/MySB/version`"
